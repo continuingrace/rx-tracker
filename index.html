@@ -118,6 +118,10 @@ body {
 .bar-cycle { background: var(--pink); }
 .bar-supplement { background: var(--blue); }
 .bar-memo { background: var(--ink3); }
+.custom-tag-row { display:flex; gap:6px; margin-top:8px; align-items:center; }
+.custom-tag-input { flex:1; font-size:13px; padding:6px 10px; }
+.add-pill-btn { flex-shrink:0; background:var(--paper2); color:var(--ink2); border-color:var(--ink4); font-size:12px; padding:5px 10px; }
+.add-pill-btn:hover { border-color:var(--ink); color:var(--ink); }
 
 .ec-body { flex: 1; min-width: 0; }
 .ec-cat { font-size: 10px; color: var(--ink3); margin-bottom: 2px; }
@@ -401,7 +405,7 @@ textarea.text-input { height: 72px; resize: none; }
       <span class="modal-title" id="modal-title-text">기록 추가</span>
       <button class="modal-close" onclick="closeModal()" aria-label="닫기">&times;</button>
     </div>
-    <div class="modal-body">
+    <div class="modal-body" onkeydown="handleModalKey(event)">
 
       <div class="field">
         <span class="field-label">카테고리</span>
@@ -460,14 +464,34 @@ textarea.text-input { height: 72px; resize: none; }
           <span class="field-label">증상</span>
           <div class="pill-grid" id="p-symptom">
             <button class="pill" onclick="tpill(this)">두통</button>
-            <button class="pill" onclick="tpill(this)">건조함</button>
-            <button class="pill" onclick="tpill(this)">구역</button>
-            <button class="pill" onclick="tpill(this)">피로</button>
-            <button class="pill" onclick="tpill(this)">근육통</button>
-            <button class="pill" onclick="tpill(this)">눈 건조</button>
+            <button class="pill" onclick="tpill(this)">편두통</button>
+            <button class="pill" onclick="tpill(this)">피로·무기력</button>
+            <button class="pill" onclick="tpill(this)">극심한 피로</button>
+            <button class="pill" onclick="tpill(this)">구역·메스꺼움</button>
             <button class="pill" onclick="tpill(this)">복통</button>
+            <button class="pill" onclick="tpill(this)">소화불량</button>
+            <button class="pill" onclick="tpill(this)">식욕감소</button>
+            <button class="pill" onclick="tpill(this)">근육통</button>
+            <button class="pill" onclick="tpill(this)">관절통</button>
+            <button class="pill" onclick="tpill(this)">등·허리 통증</button>
+            <button class="pill" onclick="tpill(this)">입술 건조·각질</button>
+            <button class="pill" onclick="tpill(this)">피부 건조</button>
+            <button class="pill" onclick="tpill(this)">피부 예민·따가움</button>
+            <button class="pill" onclick="tpill(this)">눈 건조</button>
+            <button class="pill" onclick="tpill(this)">눈 충혈</button>
+            <button class="pill" onclick="tpill(this)">눈 침침함</button>
+            <button class="pill" onclick="tpill(this)">코 건조·출혈</button>
             <button class="pill" onclick="tpill(this)">두근거림</button>
+            <button class="pill" onclick="tpill(this)">어지러움</button>
+            <button class="pill" onclick="tpill(this)">빛 민감</button>
+            <button class="pill" onclick="tpill(this)">열감</button>
+            <button class="pill" onclick="tpill(this)">발한</button>
             <button class="pill" onclick="tpill(this)">수면불량</button>
+            <button class="pill" onclick="tpill(this)">손발 저림</button>
+          </div>
+          <div class="custom-tag-row">
+            <input type="text" class="text-input custom-tag-input" id="custom-symptom-input" placeholder="직접 입력 후 Enter">
+            <button class="pill add-pill-btn" onclick="addCustomTag('p-symptom','custom-symptom-input')">+ 추가</button>
           </div>
         </div>
         <div class="field">
@@ -493,15 +517,30 @@ textarea.text-input { height: 72px; resize: none; }
           <div class="pill-grid" id="p-mood">
             <button class="pill" onclick="tpill(this)">예민함</button>
             <button class="pill" onclick="tpill(this)">짜증</button>
+            <button class="pill" onclick="tpill(this)">분노</button>
+            <button class="pill" onclick="tpill(this)">충동적</button>
+            <button class="pill" onclick="tpill(this)">거절 민감</button>
+            <button class="pill" onclick="tpill(this)">상처받음</button>
             <button class="pill" onclick="tpill(this)">무기력</button>
+            <button class="pill" onclick="tpill(this)">의욕 저하</button>
             <button class="pill" onclick="tpill(this)">불안</button>
+            <button class="pill" onclick="tpill(this)">초조함</button>
+            <button class="pill" onclick="tpill(this)">공황·두려움</button>
             <button class="pill" onclick="tpill(this)">우울</button>
+            <button class="pill" onclick="tpill(this)">슬픔</button>
+            <button class="pill" onclick="tpill(this)">공허함</button>
             <button class="pill" onclick="tpill(this)">감정기복</button>
+            <button class="pill" onclick="tpill(this)">감정 둔화</button>
+            <button class="pill" onclick="tpill(this)">멍한 느낌</button>
+            <button class="pill" onclick="tpill(this)">집중 어려움</button>
+            <button class="pill" onclick="tpill(this)">brain fog</button>
+            <button class="pill" onclick="tpill(this)">생각 과속</button>
             <button class="pill" onclick="tpill(this)">평온</button>
             <button class="pill" onclick="tpill(this)">활기</button>
-            <button class="pill" onclick="tpill(this)">슬픔</button>
-            <button class="pill" onclick="tpill(this)">상처받음</button>
-            <button class="pill" onclick="tpill(this)">감정 둔화</button>
+          </div>
+          <div class="custom-tag-row">
+            <input type="text" class="text-input custom-tag-input" id="custom-mood-input" placeholder="직접 입력 후 Enter">
+            <button class="pill add-pill-btn" onclick="addCustomTag('p-mood','custom-mood-input')">+ 추가</button>
           </div>
         </div>
         <div class="field">
@@ -649,15 +688,27 @@ function p(n) { return n<10?'0'+n:''+n; }
 function nowT() { const d=new Date(); return p(d.getHours())+':'+p(d.getMinutes()); }
 function toMin(t) { const[h,m]=t.split(':').map(Number); return h*60+m; }
 function fmtElapsed(min) {
-  if(min<0) return null;
+  if(min<0||min>72*60) return null; // 72시간 초과는 표시 안 함
   const h=Math.floor(min/60), m=min%60;
   if(h===0) return `+${m}분`;
   if(m===0) return `+${h}시간`;
   return `+${h}시간 ${m}분`;
 }
-function lastMed(entries, idx) {
-  for(let i=idx-1;i>=0;i--) if(entries[i].cat==='med') return entries[i];
+function lastMed(entries, idx, dateStr) {
+  // 당일 기록에서 먼저 탐색
+  for(let i=idx-1;i>=0;i--) if(entries[i].cat==='med') return {entry:entries[i], dayOffset:0};
+  // 없으면 전날 기록에서 탐색 (최대 2일 전까지)
+  for(let offset=1; offset<=2; offset++){
+    const pd = prevDate(dateStr, offset);
+    const prev = S.entries[pd]||[];
+    for(let i=prev.length-1;i>=0;i--){
+      if(prev[i].cat==='med') return {entry:prev[i], dayOffset:offset};
+    }
+  }
   return null;
+}
+function prevDate(ds, n){
+  const d=new Date(ds+'T00:00:00'); d.setDate(d.getDate()-n); return fmt(d);
 }
 
 /* ── 탭 ── */
@@ -725,12 +776,16 @@ function renderCards(ds) {
   entries.forEach((e,i)=>{
     const card=document.createElement('div');
     card.className='ecard'+(e.cat==='med'?' is-med':'');
-    const ref=lastMed(entries,i);
+    const ref=lastMed(entries,i,ds);
     let elapsedHtml='';
-    if(e.cat!=='med' && ref){
-      const diff=toMin(e.time)-toMin(ref.time);
-      const badge=fmtElapsed(diff);
-      if(badge) elapsedHtml=`<div class="ec-elapsed"><i class="ti ti-clock" style="font-size:11px" aria-hidden="true"></i>${badge} 후</div><div class="ec-ref">${ref.medName||ref.med||'복용'} 기준</div>`;
+    if(e.cat!=='med' && e.cat!=='supplement' && ref){
+      const dayOffset=ref.dayOffset;
+      const diffMin = toMin(e.time) - toMin(ref.entry.time) + dayOffset*24*60;
+      const badge=fmtElapsed(diffMin);
+      if(badge){
+        const dayLabel=dayOffset===1?' (어제 복용)':dayOffset===2?' (2일 전 복용)':'';
+        elapsedHtml=`<div class="ec-elapsed"><i class="ti ti-clock" style="font-size:11px" aria-hidden="true"></i>${badge} 후${dayLabel}</div><div class="ec-ref">${ref.entry.medName||ref.entry.med||'복용'} 기준</div>`;
+      }
     }
     card.innerHTML=`
       <div class="ec-time">${e.time}</div>
@@ -790,10 +845,33 @@ function showFields(cat) {
   });
 }
 function tpill(btn) { btn.classList.toggle('on'); }
+function handleModalKey(e) {
+  if(e.key!=='Enter') return;
+  const active=document.activeElement;
+  if(active&&active.id==='custom-symptom-input'){ e.preventDefault(); addCustomTag('p-symptom','custom-symptom-input'); }
+  if(active&&active.id==='custom-mood-input'){ e.preventDefault(); addCustomTag('p-mood','custom-mood-input'); }
+}
+function addCustomTag(gridId, inputId) {
+  const input = document.getElementById(inputId);
+  const val = input.value.trim();
+  if(!val) return;
+  const grid = document.getElementById(gridId);
+  // 이미 있는 태그면 그냥 활성화
+  const existing = [...grid.querySelectorAll('.pill')].find(b=>b.textContent===val);
+  if(existing){ existing.classList.add('on'); input.value=''; return; }
+  const btn = document.createElement('button');
+  btn.className='pill on custom-pill';
+  btn.textContent=val;
+  btn.onclick=()=>tpill(btn);
+  grid.appendChild(btn);
+  input.value='';
+}
 function tscale(btn,gid) { document.querySelectorAll('#'+gid+' .scale-btn').forEach(b=>b.classList.remove('on')); btn.classList.add('on'); }
 function gscale(gid) { const s=document.querySelector('#'+gid+' .scale-btn.on'); return s?parseInt(s.textContent):null; }
 function gpills(pid) { return [...document.querySelectorAll('#'+pid+' .pill.on')].map(b=>b.textContent); }
 function clearForm() {
+  // 커스텀 추가 태그 제거 후 기본 태그 초기화
+  document.querySelectorAll('.custom-pill').forEach(b=>b.remove());
   document.querySelectorAll('.pill.on').forEach(b=>b.classList.remove('on'));
   document.querySelectorAll('.scale-btn.on').forEach(b=>b.classList.remove('on'));
   ['f-med-dose','f-symptom-note','f-mood-note','f-caf-note','f-sleep-note','f-cycle-note','f-supp-dose','f-supp-note','f-memo-title','f-memo-body','f-med-custom','f-supp-custom'].forEach(id=>{
@@ -900,7 +978,7 @@ function renderCalDetail(ds) {
   entries.forEach((e,i)=>{
     const ref=lastMed(entries,i);
     let elHtml='';
-    if(e.cat!=='med'&&ref){ const diff=toMin(e.time)-toMin(ref.time); const b=fmtElapsed(diff); if(b) elHtml=` <span style="font-size:10px;font-weight:500;background:var(--amber-bg);color:var(--amber);border-radius:8px;padding:1px 6px;margin-left:4px;">${b}</span>`; }
+    if(e.cat!=='med'&&ref){ const diff=toMin(e.time)-toMin(ref.time); const b=fmtElapsed(diff); if(b) elHtml=` <span style="font-size:10px;font-weight:500;background:var(--amber-bg);color:var(--amber);border-radius:8px;padding:1px 6px;margin-left:4px;">${b}${dayOffset>0?" (전날)":""}</span>`; }
     const row=document.createElement('div');
     row.style.cssText='display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:0.5px solid var(--ink4);';
     row.innerHTML=`<span style="font-size:10px;color:var(--ink3);min-width:30px;padding-top:1px;">${e.time}</span><div style="width:2px;border-radius:2px;background:var(--${e.cat==='med'?'green':e.cat==='mood'?'amber':e.cat==='caffeine'?'brown':e.cat==='symptom'?'red':e.cat==='sleep'?'blue':e.cat==='supplement'?'blue':e.cat==='memo'?'ink3':'pink'});align-self:stretch;flex-shrink:0;min-height:16px;"></div><div style="flex:1;"><div style="font-size:10px;color:var(--ink3);">${catNames[e.cat]||''}</div><div style="font-size:12px;font-weight:500;">${mainLabel(e)}${elHtml}</div></div>`;
