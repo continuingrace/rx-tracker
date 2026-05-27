@@ -694,18 +694,35 @@ function fmtElapsed(min) {
   if(m===0) return `+${h}시간`;
   return `+${h}시간 ${m}분`;
 }
-function lastMed(entries, idx, dateStr) {
-  // 당일 기록에서 먼저 탐색
-  for(let i=idx-1;i>=0;i--) if(entries[i].cat==='med') return {entry:entries[i], dayOffset:0};
-  // 없으면 전날 기록에서 탐색 (최대 2일 전까지)
-  for(let offset=1; offset<=2; offset++){
-    const pd = prevDate(dateStr, offset);
-    const prev = S.entries[pd]||[];
-    for(let i=prev.length-1;i>=0;i--){
-      if(prev[i].cat==='med') return {entry:prev[i], dayOffset:offset};
+function lastMedGroup(entries, idx, dateStr) {
+  // 당일에서 가장 최근 약 복용 시각 찾기
+  let refTime = null, dayOffset = 0;
+  for(let i=idx-1;i>=0;i--){
+    if(entries[i].cat==='med'){ refTime=entries[i].time; dayOffset=0; break; }
+  }
+  // 당일에 없으면 전날~2일전 탐색
+  if(!refTime){
+    for(let offset=1; offset<=2; offset++){
+      const pd=prevDate(dateStr, offset);
+      const prev=S.entries[pd]||[];
+      for(let i=prev.length-1;i>=0;i--){
+        if(prev[i].cat==='med'){ refTime=prev[i].time; dayOffset=offset; break; }
+      }
+      if(refTime) break;
     }
   }
-  return null;
+  if(!refTime) return null;
+
+  // 같은 시각(±1분)에 먹은 약 전체 묶기
+  let pool = [];
+  if(dayOffset===0){
+    pool = entries.filter(e=>e.cat==='med' && Math.abs(toMin(e.time)-toMin(refTime))<=1);
+  } else {
+    const pd=prevDate(dateStr, dayOffset);
+    pool = (S.entries[pd]||[]).filter(e=>e.cat==='med' && Math.abs(toMin(e.time)-toMin(refTime))<=1);
+  }
+  const names = [...new Set(pool.map(e=>e.medName||'약'))];
+  return { time: refTime, names, dayOffset };
 }
 function prevDate(ds, n){
   const d=new Date(ds+'T00:00:00'); d.setDate(d.getDate()-n); return fmt(d);
@@ -729,9 +746,9 @@ function renderHome() {
   const days=['일','월','화','수','목','금','토'];
   const months=['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
   document.getElementById('hdr-date').textContent = months[d.getMonth()]+' '+d.getDate()+'일 '+days[d.getDay()];
-  const cd = getCycleDay(today());
+  const cl = getCycleLabel(today());
   let sub = d.getFullYear()+'년';
-  if(cd) sub += ' · 생리주기 '+cd+'일째';
+  if(cl) sub += '  ·  ' + cl;
   document.getElementById('hdr-sub').textContent = sub;
   renderStrip();
   renderCards(selectedDate);
@@ -762,6 +779,9 @@ function updateHeader(ds) {
   const months=['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
   const isToday = ds===today();
   document.getElementById('hdr-date').textContent = months[d.getMonth()]+' '+d.getDate()+'일 '+days[d.getDay()]+(isToday?' (오늘)':'');
+  const cl = getCycleLabel(ds);
+  const sub = d.getFullYear()+'년' + (cl ? '  ·  '+cl : '');
+  document.getElementById('hdr-sub').textContent = sub;
 }
 
 function renderCards(ds) {
@@ -776,15 +796,15 @@ function renderCards(ds) {
   entries.forEach((e,i)=>{
     const card=document.createElement('div');
     card.className='ecard'+(e.cat==='med'?' is-med':'');
-    const ref=lastMed(entries,i,ds);
+    const ref=lastMedGroup(entries,i,ds);
     let elapsedHtml='';
     if(e.cat!=='med' && e.cat!=='supplement' && ref){
-      const dayOffset=ref.dayOffset;
-      const diffMin = toMin(e.time) - toMin(ref.entry.time) + dayOffset*24*60;
+      const diffMin = toMin(e.time) - toMin(ref.time) + ref.dayOffset*24*60;
       const badge=fmtElapsed(diffMin);
       if(badge){
-        const dayLabel=dayOffset===1?' (어제 복용)':dayOffset===2?' (2일 전 복용)':'';
-        elapsedHtml=`<div class="ec-elapsed"><i class="ti ti-clock" style="font-size:11px" aria-hidden="true"></i>${badge} 후${dayLabel}</div><div class="ec-ref">${ref.entry.medName||ref.entry.med||'복용'} 기준</div>`;
+        const dayLabel=ref.dayOffset===1?' (어제 복용)':ref.dayOffset===2?' (2일 전 복용)':'';
+        const nameLabel=ref.names.join(' · ');
+        elapsedHtml=`<div class="ec-elapsed"><i class="ti ti-clock" style="font-size:11px" aria-hidden="true"></i>${badge} 후${dayLabel}</div><div class="ec-ref">${nameLabel} 기준</div>`;
       }
     }
     card.innerHTML=`
@@ -1005,7 +1025,28 @@ function getCycleDay(ds) {
   const d=new Date(ds+'T00:00:00');
   const diff=Math.round((d-start)/(1000*60*60*24));
   const pos=((diff%S.cycleLen)+S.cycleLen)%S.cycleLen;
-  return pos+1;
+  return pos+1; // 1-based 일수
+}
+function getCyclePhase(ds) {
+  if(!S.cycleStart) return null;
+  const start=new Date(S.cycleStart+'T00:00:00');
+  const d=new Date(ds+'T00:00:00');
+  const diff=Math.round((d-start)/(1000*60*60*24));
+  const pos=((diff%S.cycleLen)+S.cycleLen)%S.cycleLen;
+  const day=pos+1;
+  const len=S.cycleLen||28;
+  const ovulation=Math.round(len/2);
+  if(day<=5) return '🩸 생리중';
+  if(day<=ovulation-3) return '🌱 난포기';
+  if(day<=ovulation+2) return '🌸 배란기';
+  if(day<=len-5) return '🌙 황체기';
+  return '⚡ PMS';
+}
+function getCycleLabel(ds) {
+  const day=getCycleDay(ds);
+  const phase=getCyclePhase(ds);
+  if(!day) return null;
+  return `D+${day}  ${phase}`;
 }
 
 /* ── 분석 ── */
