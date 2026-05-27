@@ -116,6 +116,8 @@ body {
 .bar-symptom { background: var(--red); }
 .bar-sleep { background: var(--blue); }
 .bar-cycle { background: var(--pink); }
+.bar-supplement { background: var(--blue); }
+.bar-memo { background: var(--ink3); }
 
 .ec-body { flex: 1; min-width: 0; }
 .ec-cat { font-size: 10px; color: var(--ink3); margin-bottom: 2px; }
@@ -346,6 +348,14 @@ textarea.text-input { height: 72px; resize: none; }
           <button class="small-btn" style="width:100%;margin-top:8px;" onclick="saveCycle()">저장</button>
         </div>
         <div class="setting-card">
+          <div class="setting-title">영양제 목록</div>
+          <div id="supp-list"></div>
+          <div class="add-row">
+            <input type="text" id="supp-input" placeholder="영양제 이름 입력" onkeydown="if(event.key==='Enter')addSupp()">
+            <button class="small-btn" onclick="addSupp()">추가</button>
+          </div>
+        </div>
+        <div class="setting-card">
           <div class="setting-title">백업 · 복구</div>
           <button class="backup-btn" onclick="exportData()">
             <i class="ti ti-download" aria-hidden="true"></i> JSON으로 내보내기
@@ -414,6 +424,12 @@ textarea.text-input { height: 72px; resize: none; }
           <button class="cat-btn" data-cat="cycle" onclick="setCat(this)">
             <i class="ti ti-heart" aria-hidden="true"></i>생리
           </button>
+          <button class="cat-btn" data-cat="supplement" onclick="setCat(this)">
+            <i class="ti ti-leaf" aria-hidden="true"></i>영양제
+          </button>
+          <button class="cat-btn" data-cat="memo" onclick="setCat(this)">
+            <i class="ti ti-notes" aria-hidden="true"></i>기타 메모
+          </button>
         </div>
       </div>
 
@@ -426,7 +442,11 @@ textarea.text-input { height: 72px; resize: none; }
       <div class="cond show" id="c-med">
         <div class="field">
           <span class="field-label">약 이름</span>
-          <select class="text-input" id="f-med-name"></select>
+          <select class="text-input" id="f-med-name" onchange="onMedChange(this)"></select>
+        </div>
+        <div class="field" id="med-custom-wrap" style="display:none;">
+          <span class="field-label">직접 입력</span>
+          <input type="text" class="text-input" id="f-med-custom" placeholder="약 이름 입력">
         </div>
         <div class="field">
           <span class="field-label">용량 메모</span>
@@ -573,6 +593,38 @@ textarea.text-input { height: 72px; resize: none; }
         </div>
       </div>
 
+      <!-- 영양제 -->
+      <div class="cond" id="c-supplement">
+        <div class="field">
+          <span class="field-label">영양제 이름</span>
+          <select class="text-input" id="f-supp-name" onchange="onSuppChange(this)"></select>
+        </div>
+        <div class="field" id="supp-custom-wrap" style="display:none;">
+          <span class="field-label">직접 입력</span>
+          <input type="text" class="text-input" id="f-supp-custom" placeholder="영양제 이름 입력">
+        </div>
+        <div class="field">
+          <span class="field-label">용량 메모</span>
+          <input type="text" class="text-input" id="f-supp-dose" placeholder="예: 1정, 500mg">
+        </div>
+        <div class="field">
+          <span class="field-label">메모</span>
+          <input type="text" class="text-input" id="f-supp-note" placeholder="">
+        </div>
+      </div>
+
+      <!-- 기타 메모 -->
+      <div class="cond" id="c-memo">
+        <div class="field">
+          <span class="field-label">제목</span>
+          <input type="text" class="text-input" id="f-memo-title" placeholder="예: 병원 방문, 특이사항">
+        </div>
+        <div class="field">
+          <span class="field-label">내용</span>
+          <textarea class="text-input" id="f-memo-body" placeholder="자유롭게 기록하세요..." style="height:90px;"></textarea>
+        </div>
+      </div>
+
       <button class="save-btn" onclick="saveEntry()">저장</button>
     </div>
   </div>
@@ -589,7 +641,7 @@ let calY, calM;
 function load() {
   try { return JSON.parse(localStorage.getItem('rx_tracker_v2')) || def(); } catch(e) { return def(); }
 }
-function def() { return { entries:{}, meds:['알리톡 10mg','트레노 100mg'], cycleStart:'', cycleLen:28 }; }
+function def() { return { entries:{}, meds:['알리톡 10mg','트레노 100mg'], supps:['비타민C','오메가3','마그네슘','비타민D','유산균'], cycleStart:'', cycleLen:28 }; }
 function save() { localStorage.setItem('rx_tracker_v2', JSON.stringify(S)); }
 function today() { const d=new Date(); return fmt(d); }
 function fmt(d) { return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()); }
@@ -669,7 +721,7 @@ function renderCards(ds) {
     list.innerHTML=`<div class="empty-state"><i class="ti ti-notes" aria-hidden="true"></i><p>기록이 없어요.<br>아래 버튼으로 추가해보세요.</p></div>`;
     return;
   }
-  const catNames={med:'약 복용',symptom:'신체 증상',mood:'감정',caffeine:'카페인',sleep:'수면',cycle:'생리주기'};
+  const catNames={med:'약 복용',symptom:'신체 증상',mood:'감정',caffeine:'카페인',sleep:'수면',cycle:'생리주기',supplement:'영양제',memo:'기타 메모'};
   entries.forEach((e,i)=>{
     const card=document.createElement('div');
     card.className='ecard'+(e.cat==='med'?' is-med':'');
@@ -698,6 +750,8 @@ function renderCards(ds) {
 function mainLabel(e) {
   if(e.cat==='med') return e.medName||(e.tags&&e.tags[0])||'약';
   if(e.cat==='sleep') return e.sleepStart&&e.sleepEnd?e.sleepStart+' – '+e.sleepEnd:'수면';
+  if(e.cat==='supplement') return e.suppName||(e.tags&&e.tags[0])||'영양제';
+  if(e.cat==='memo') return e.memoTitle||'메모';
   const tags=(e.tags||[]).concat(e.stateTags||[]).concat(e.symTags||[]);
   return tags.length>0 ? tags.slice(0,3).join(' · ') : (e.note||e.cat);
 }
@@ -731,7 +785,7 @@ function setCatById(cat) {
   currentCat=cat; showFields(cat);
 }
 function showFields(cat) {
-  ['med','symptom','mood','caffeine','sleep','cycle'].forEach(c=>{
+  ['med','symptom','mood','caffeine','sleep','cycle','supplement','memo'].forEach(c=>{
     document.getElementById('c-'+c).className='cond'+(c===cat?' show':'');
   });
 }
@@ -742,7 +796,7 @@ function gpills(pid) { return [...document.querySelectorAll('#'+pid+' .pill.on')
 function clearForm() {
   document.querySelectorAll('.pill.on').forEach(b=>b.classList.remove('on'));
   document.querySelectorAll('.scale-btn.on').forEach(b=>b.classList.remove('on'));
-  ['f-med-dose','f-symptom-note','f-mood-note','f-caf-note','f-sleep-note','f-cycle-note'].forEach(id=>{
+  ['f-med-dose','f-symptom-note','f-mood-note','f-caf-note','f-sleep-note','f-cycle-note','f-supp-dose','f-supp-note','f-memo-title','f-memo-body','f-med-custom','f-supp-custom'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.value='';
   });
   document.getElementById('f-sleep-start').value='23:00';
@@ -751,14 +805,29 @@ function clearForm() {
 function updateMedSelect() {
   const sel=document.getElementById('f-med-name'); sel.innerHTML='';
   (S.meds||[]).forEach(m=>{ const o=document.createElement('option'); o.value=m; o.textContent=m; sel.appendChild(o); });
-  if(!S.meds||!S.meds.length){ const o=document.createElement('option'); o.value='기타'; o.textContent='설정에서 약 추가'; sel.appendChild(o); }
+  const oc=document.createElement('option'); oc.value='__custom__'; oc.textContent='+ 직접 입력'; sel.appendChild(oc);
+  document.getElementById('med-custom-wrap').style.display='none';
+  updateSuppSelect();
+}
+function updateSuppSelect() {
+  const sel=document.getElementById('f-supp-name'); sel.innerHTML='';
+  (S.supps||['비타민C','오메가3','마그네슘','비타민D','유산균']).forEach(m=>{ const o=document.createElement('option'); o.value=m; o.textContent=m; sel.appendChild(o); });
+  const oc=document.createElement('option'); oc.value='__custom__'; oc.textContent='+ 직접 입력'; sel.appendChild(oc);
+  document.getElementById('supp-custom-wrap').style.display='none';
+}
+function onMedChange(sel) {
+  document.getElementById('med-custom-wrap').style.display = sel.value==='__custom__'?'block':'none';
+}
+function onSuppChange(sel) {
+  document.getElementById('supp-custom-wrap').style.display = sel.value==='__custom__'?'block':'none';
 }
 
 function saveEntry() {
   const time=document.getElementById('f-time').value||nowT();
   let e={cat:currentCat, time};
   if(currentCat==='med'){
-    e.medName=document.getElementById('f-med-name').value;
+    const mv=document.getElementById('f-med-name').value;
+    e.medName=mv==='__custom__'?document.getElementById('f-med-custom').value:mv;
     e.dose=document.getElementById('f-med-dose').value;
   } else if(currentCat==='symptom'){
     e.tags=gpills('p-symptom'); e.intensity=gscale('s-intensity'); e.note=document.getElementById('f-symptom-note').value;
@@ -775,6 +844,14 @@ function saveEntry() {
   } else if(currentCat==='cycle'){
     e.stateTags=gpills('p-cycle-state'); e.symTags=gpills('p-cycle-sym'); e.note=document.getElementById('f-cycle-note').value;
     e.tags=[...e.stateTags,...e.symTags];
+  } else if(currentCat==='supplement'){
+    const sv=document.getElementById('f-supp-name').value;
+    e.suppName=sv==='__custom__'?document.getElementById('f-supp-custom').value:sv;
+    e.dose=document.getElementById('f-supp-dose').value;
+    e.note=document.getElementById('f-supp-note').value;
+  } else if(currentCat==='memo'){
+    e.memoTitle=document.getElementById('f-memo-title').value||'메모';
+    e.note=document.getElementById('f-memo-body').value;
   }
   if(!S.entries[editDate]) S.entries[editDate]=[];
   S.entries[editDate].push(e);
@@ -826,7 +903,7 @@ function renderCalDetail(ds) {
     if(e.cat!=='med'&&ref){ const diff=toMin(e.time)-toMin(ref.time); const b=fmtElapsed(diff); if(b) elHtml=` <span style="font-size:10px;font-weight:500;background:var(--amber-bg);color:var(--amber);border-radius:8px;padding:1px 6px;margin-left:4px;">${b}</span>`; }
     const row=document.createElement('div');
     row.style.cssText='display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:0.5px solid var(--ink4);';
-    row.innerHTML=`<span style="font-size:10px;color:var(--ink3);min-width:30px;padding-top:1px;">${e.time}</span><div style="width:2px;border-radius:2px;background:var(--${e.cat==='med'?'green':e.cat==='mood'?'amber':e.cat==='caffeine'?'brown':e.cat==='symptom'?'red':e.cat==='sleep'?'blue':'pink'});align-self:stretch;flex-shrink:0;min-height:16px;"></div><div style="flex:1;"><div style="font-size:10px;color:var(--ink3);">${catNames[e.cat]||''}</div><div style="font-size:12px;font-weight:500;">${mainLabel(e)}${elHtml}</div></div>`;
+    row.innerHTML=`<span style="font-size:10px;color:var(--ink3);min-width:30px;padding-top:1px;">${e.time}</span><div style="width:2px;border-radius:2px;background:var(--${e.cat==='med'?'green':e.cat==='mood'?'amber':e.cat==='caffeine'?'brown':e.cat==='symptom'?'red':e.cat==='sleep'?'blue':e.cat==='supplement'?'blue':e.cat==='memo'?'ink3':'pink'});align-self:stretch;flex-shrink:0;min-height:16px;"></div><div style="flex:1;"><div style="font-size:10px;color:var(--ink3);">${catNames[e.cat]||''}</div><div style="font-size:12px;font-weight:500;">${mainLabel(e)}${elHtml}</div></div>`;
     list.appendChild(row);
   });
   const addBtn=document.createElement('button');
@@ -909,11 +986,19 @@ function renderSetting() {
     row.innerHTML=`<i class="ti ti-pill" style="font-size:14px;color:var(--green)" aria-hidden="true"></i><span>${m}</span><button onclick="delMed(${i})" aria-label="삭제">×</button>`;
     list.appendChild(row);
   });
+  const slist=document.getElementById('supp-list'); slist.innerHTML='';
+  (S.supps||[]).forEach((m,i)=>{
+    const row=document.createElement('div'); row.className='med-row';
+    row.innerHTML=`<i class="ti ti-leaf" style="font-size:14px;color:var(--blue)" aria-hidden="true"></i><span>${m}</span><button onclick="delSupp(${i})" aria-label="삭제">×</button>`;
+    slist.appendChild(row);
+  });
   if(S.cycleStart) document.getElementById('cycle-start').value=S.cycleStart;
   document.getElementById('cycle-len').value=S.cycleLen||28;
 }
 function addMed(){ const v=document.getElementById('med-input').value.trim(); if(!v)return; S.meds.push(v); document.getElementById('med-input').value=''; save(); renderSetting(); }
 function delMed(i){ S.meds.splice(i,1); save(); renderSetting(); }
+function addSupp(){ const v=document.getElementById('supp-input').value.trim(); if(!v)return; if(!S.supps)S.supps=[]; S.supps.push(v); document.getElementById('supp-input').value=''; save(); renderSetting(); }
+function delSupp(i){ S.supps.splice(i,1); save(); renderSetting(); }
 function saveCycle(){
   S.cycleStart=document.getElementById('cycle-start').value;
   S.cycleLen=parseInt(document.getElementById('cycle-len').value)||28;
