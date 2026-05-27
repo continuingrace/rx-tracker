@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIlx1YmNmNVx1YzZhOVx1YWUzMFx1Yjg1ZCIsICJzaG9ydF9uYW1lIjogIlx1YmNmNVx1YzZhOVx1YWUzMFx1Yjg1ZCIsICJzdGFydF91cmwiOiAiLiIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjRkFGQUY4IiwgInRoZW1lX2NvbG9yIjogIiNGQUZBRjgiLCAiaWNvbnMiOiBbeyJzcmMiOiAiZGF0YTppbWFnZS9wbmc7YmFzZTY0LC85ai80QUFRU2taSlJnQUJBUUFBQVFBQkFBRC80Z0hZU1VORFgxQlNUMFpKVEVVQUFRRUFBQUhJQUFBQUFBUXdBQUJ0Ym5SeVVrZENJRmhaV2lBSDRBQUJBQUVBQUFBQUFBQmhZM053QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQVFBQTl0WUFBUUFBQUFEVExRQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFsa1pYTmpBQUFBOEFBQUFDUnlXRmxhQUFBQkZBQUFBQlJuV0ZsYUFBQUJLQUFBQUJSaVdGbGFBQUFCUEFBQUFCUjNkSEIwQUFBQlVBQUFBQlJ5VkZKREFBQUJaQUFBQUNoblZGSkRBQUFCWkFBQUFDaGlWRkpEQUFBQlpBQUFBQ2hqY0hKMEFBQUJqQUFBQUR4dGJIVmpBQUFBQUFBQUFBRUFBQUFNWlc1VlV3QUFBQWdBQUFBY0FITUFVZ0JIQUVKWVdWb2dBQUFBQUFBQWI2SUFBRGoxQUFBRGtGaFpXaUFBQUFBQUFBQmltUUFBdDRVQUFCamFXRmxhSUFBQUFBQUFBQ1NnQUFBUGhBQUF0czlZV1ZvZ0FBQUFBQUFBOXRZQUFRQUFBQURUTFhCaGNtRUFBQUFBQUFRQUFBQUNabVlBQVBLbkFBQU5XUUFBRTlBQUFBcGJBQUFBQUFBQUFBQnRiSFZqQUFBQUFBQUFBQUVBQUFBTVpXNVZVd0FBQUNBQUFBQWNBRWNBYndCdkFHY0FiQUJsQUNBQVNRQnVBR01BTGdBZ0FESUFNQUF4QURiLzJ3QkRBQVVEQkFRRUF3VUVCQVFGQlFVR0J3d0lCd2NIQnc4TEN3a01FUThTRWhFUEVSRVRGaHdYRXhRYUZSRVJHQ0VZR2gwZEh4OGZFeGNpSkNJZUpCd2VIeDcvMndCREFRVUZCUWNHQnc0SUNBNGVGQkVVSGg0ZUhoNGVIaDRlSGg0ZUhoNGVIaDRlSGg0ZUhoNGVIaDRlSGg0ZUhoNGVIaDRlSGg0ZUhoNGVIaDRlSGg0ZUhoNy93QUFSQ0FEUUFOQURBU0lBQWhFQkF4RUIvOFFBSFFBQkFRRUFBZ01CQVFBQUFBQUFBQUFBQUFnSEJRWUNBd1FKQWYvRUFFd1FBQUVEQWdNREJRc0lCUXNGQUFBQUFBQUJBZ01FQlFZSEVRZ1NJVEZCZFpUVEV4WVhHRGRSVkZhVnM5SVVGU0pUVjJHUzBVSlNXSEowSXpJMU5qaHhnWkdqc2JJek5FT0V3Zi9FQUJzQkFRQUNBd0VCQUFBQUFBQUFBQUFBQUFBRUJRTUdCd0VDLzhRQU5CRUFBZ0VDQVFvRkFnVUZBQUFBQUFBQUFBRURBZ1FSQlFZU0ZSWWhOR0dCa1RFelFWRlNFOUVVY1hLUzhDSTFRckhCLzlvQURBTUJBQUlSQXhFQVB3Q3l3QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQ1RNeGNWNHN6Z3pIdldGY080aHFiRGd5eFNyVFZVOUk1V3lWc3FLcU9SVlJVVlc2bzVFVFhkMFJIS2lxcUlScnU3aXRJbkxLOEVqTEREWE5XcUtGdlpXWUl6OFh2Qks4WkxoZm51NTNPcVk5Vi8weDR2V0IvVGI3MWlQc3pYTnNjbjgreGFhanVlUlpnSXo4WHJBL3B0OTZ4SDJZOFhyQS9wdDk2eEgyWTJ4c09mWWFqdWVSWmdJeVhaNndQcC8zdDlUL3dCaVBzejdNTFlveFBrRGlTbmd1bHd1Ri95N3JucEU1WmxXU1czdlhuYjV1ZGRFMFJ5YThFY1RMTE9XeXZKVkZROEcvY3dYR1NwNEtOT3BiaXdRZk5hcStpdXR0cHJsYnFtS3FvNnFKczBFMFR0V3lNY21xT1JmTXFLZlNiQVZvQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBSXkyVVBwNWQxODd2cFN5M2FWejNyeXVYdWNYS1dhUmhzcHlSdzVYMXNzcjJzalpjNW5PYzVkRWFpUlJhcXBxbWVQQWRVWE9RK0o2R3dnNjEzLzRIOWI3RjE2UDh4My9BT0IvVyt4ZGVqL001bCtFbitEN00ydjYwZnlYYzdLRHJYZi9BSUg5YjdGMTZQOEFNZC8rQi9XK3hkZWovTWZoSi9nK3pIMW8va3U1MlUrUzgyMmh2RnJxTFpjcWRsVFNWTEZaTEc5T0RrLytMem92TXFIQzkvOEFnZjF2c1hYby93QXgzLzRIOWI3RjE2UDh6Mm0ydUtXbXFIaitUUEhMRTFnNmwzT3NaWVl3dVdRK01Zc0k0bHE1cXZBRjBsVmFDdGtUVmJmSTVlS09YOVhYK2NuSittbjZTTFc4RXNVOExKNEpHU3hTTlI3SHNjaXRjMVUxUlVWT1ZGSmN4UmlMTFBFbGtxTFBkOFRXR2VsbmJvcWZMbzk1cTh6bXJyd2NuTXBtck1DNVVSc2F4bWExVTFyVTBhMUx4QWlJbm1UNkowUEplY2xWTUNwdTZLdEplcXBlODFtN3lXbkpqRFVzSHpMd0JDUGVQbFg5ckZaN1pnK0VkNCtWZjJzVm50bUQ0U3kybHR2aFYrMS9ZaTZxbCtTN291NEVJOTQrVmYyc1ZudG1ENFIzajVWL2F4V2UyWVBoRzB0dDhLdjJ2N0RWVXZ5WGRGM0FoSHZIeXIrMWlzOXN3ZkNPOG5LNXE3MFdiZFl4NmNXdStlWU9DK2ZrRzB0dDhLdjJ2N0RWVXZ1dTZMdUJKZVVPWXVJOHU4Y1diREdJc1NyaXZCbUlaTzQycTdTVGQwZFR5YjI2aWIrcTZ0M2xScW9xcWlJcUttbWl0SzBMdTJ1WTdtTlNSdkZNZ1N4VlJWYU5YaUFBWnpHQUFBQUFBQUFBQ0l0blB5SVg3K0pxdmNSbHVrUmJPZmtRdjM4VFZlNGpOWHpzNE9uOVNMZkkzbnY4bWZQa05hY2pxckxtbG14ekxZbTNwWjVlNkpWVjdvNU4zZVhkMWFqMDA0ZmNkOCtZZGw3Ni9DM3RSL2FIczJUOHFjdk1XWk5VTjV4RmhhanVOd2txcWhqNTVIUFJ5dGE5VVJPRGtUZ2hySGdFeWc5UmJkK09UNGpZYVU4RnVSV043ekkvbUhaZSt2d3Q3VWYyZytZZGw3Ni9DM3RSL2FHdWVBVEtEMUZ0MzQ1UGlIZ0V5ZzlSYmQrT1Q0ajYwWDdJOHhYdVpIOHc3TDMxK0Z2YWorMEh6RHN2Zlg0VzlxUDdRMXp3Q1pRZW90dS9ISjhROEFtVUhxTGJ2eHlmRU5GK3lHSzl6SS9tSFplK3Z3dDdVZjJnK1lkbDc2L0MzdFIvYUd1ZUFUS0QxRnQzNDVQaU1kMmlyQmxEZ3VraXdwaGJBRnZ1T05yczN1ZEZUUkxJOWFaSGNFbGNtOXk4dTZpOHVtcThFWFg1cWVpc1hoZ2VyZThFZFp4MDdJMmdyS096WUZ3RFM0MXZWWWlxeUNnclpsampUenVlamwxWG4wVG1SVlZVNGE4TDNyM245bkczKzBadTFOaXlIeXNvY3ZMRWsxUzJLb3hCVnhwOHNxVTRveE9YdVRGL1ZSZVZmMGxUWHpJbW1HblhlY3RWTXJVRktkSzlXVzBXVGs2Y2EyOFNVZTllOC9zNDIvMmpOMm83MTd6K3pqYi9BR2pOMnBWd0kyMDF6OGFmNTFNdXJvL2Rrbzk2OTUvWnh0L3RHYnRUNUx6aERFRlZhYXVtcGRuMmtvWjVZWHNqcVlxNlY3NFhLaW9qMnRXUlVWVTVkRlFya0RhYTUrTlA4NmpWMGZ1eUhjVlltZ2l5a3RPRGF1aHJyWGlTdzNGcjFqcUlsWTdkWHVxN3pkZUtLaXVicWlvbk1xYTgzNlJrYmJiR0g2S1RERm94UXlKamE2R3NTaWU5RTBWOFQyUGVpS3ZQdXF6aCs4cFpKc3VRYTQ1TGQxMExEU2JiWE4rUFQxSzYvd0JKU0pWZWl3QUFMd2dnQUFBQUFBQUFBL1BUS1hIbHZ3OWxkVjRkaG9xeTYzeTUxczdLYWhwSTFjOVVkRXhxT1hSRjUwWFJFUlZYVGtQMExJeDJLY00yOUxCZGNXelFSeVY3cXRhS0NSeWFyRXhyR3VkdStiZVY2SXY3cUZCbkVvdndxY3F4U2FlSHV5d3lkVlhUSzlEeFBveVd4M21ybHZnR2x3dFQ1UDNHNHh3eXlTcFBKSzZKeTc3dDdUZDNGMDAxTzZlSGJOdjdEYXpyYit6TlJCcjZ6b3VWL2lpYnEyUDNabDNoMnpiK3cyczYyL3N4NGRzMi9zTnJPdHY3TTFFSHUxTno4VU5XeCs3TXU4TzJiZjJHMW5XMzltUER0bTM5aHRaMXQvWm1vZ2JVM1B4UTFiSDdzeW1yejB6aWZTeXNwY2txbUdkekZTT1I5UTk3V3UwNEtyZHhOVVJlYlZQN3oyWk1aZDE5bnJLekcrTktuNXh4bGQxV1NvbGZvNzVLMTMvamF2SnJwb2k2Y0VSRWFuQk9PcEFoWDJYYmk3aittOEV1Um1oc280cXRKYndBQ2xKWUFBQUFBQmlHMmg1SjZQcGlIM1V4V0JKKzJoNUo2UHBpSDNVeFdCMExOamcrcktMS1htZ0FHeGxjQUFBQUFBQUFBQ1Q5aS95VDFuVEUzdW9Tc0NUOWkveVQxblRFM3VvVFhNNStENm9zY20rYWJlQURucGVnQThKSlk0MVJIeU1hcS9yTzBBUE1IcVNlQlZSRW1qVlY0SWlPUTlvQUI0U1N4eHFpUGtZMVYvV2RvZjFIc1ZtK2oycTNsM2tYZ0FlUVBWOG9wL3I0dnhvZVVja2NtdmM1R3YwNWQxZGREM0FIbUFEd0FBQUdJYmFIa25vK21JZmRURllFbjdhSGtubyttSWZkVEZZSFFzMk9ENnNvc3BlYUFBYkdWd0FBQUFBQUFBQUpQMkwvQUNUMW5URTN1b1NzQ1Q5aS93QWs5WjB4TjdxRTF6T2ZnK3FMSEp2bW0zZ0E1NlhvSlcyNC93Q244TS93cy84QXphVlNTdHR4L3dCUDRaL2haLzhBbTB1TWhjYlQxLzB5TGVlU3pvbUNzajhWNHd3TEhpcXlWZHNrWklzaU1wSkpITWxjckhLMVVSZDNkMVZVNGFxaWZlY3BzNlpsMzdDK09xRERkMXJhbWF6VnRRbEpKVFZEbGQ4bWtjdTYxemRmNXVqdEVWT1RSVjRhNkc4YktEa2JrZmEzT1ZFYWsxU3FxcThFL2xuRW55dlpkczQzeVd0elhNck1RS3RLc2ZJcVBxUG9LbithRi9ITlZlMTNFRXlUcHB4dzVlSkNxb1VLb3JvOFdhcnR2ZjExc1BSenZlT085WlcvMk9MajBQZHY5NXpvdTI5L1hXdzlITzk0NDcxbGIvWTR1UFE5Mi8zbklVbjl0dC8xTC9wbXA0aXY4dnNUWmxaZytUSGVOS1hEVVZleWhmVU1rZWt6bzk5RzdqRmR5YXB5NmVjNXpOL0xpNTVVM2UySWwraXEzMWJIeXd6VTZPaGtqVmlvaTZwcXFweXBvcUx6TDVqZ3NyY08zdkZPTXFlellldUxiZmNaWXBYeFR1bGZHaWJyRmNxYnpFVlUxUk5QOFQwWEdtbnBNYXZ0Mk81cnB2VWxSM0N1VmowbG5halY0N3F2WFJmT25IUmRkVFlLblc3akJWLzBwYjZjTi9ydklLUytuNGI4ZkVzalpweFBkTVZaVlVkYmVaWktpc3BwcEtWMVJJdXJwa1pvclhLdk91amtSVjUxUlZOTU9BeTl0MWd0ZUNyVlI0VzNWczZVN1gwcjJ1MTdvMTMwdDlWNTFjcXFxL2VxblBuUGJxdW11YXVxaFlKdDdpOGpUVkNUQUFJNTltSWJhSGtubyttSWZkVEZZRW43YUhrbm8rbUlmZFRGWUhRczJPRDZzb3NwZWFBQWJHVndBQUFBQUFBQUFKUDJML0pQV2RNVGU2aEt3SlAyTC9KUFdkTVRlNmhOY3puNFBxaXh5YjVwdDRBT2VsNkRDTnAvTFRGZVBidFpLakRsTFR6UjBrRXJKbGxxR3g2SzV6VlRUWGw1RGR3U0xXNXJ0WlZMUjRvK0pJMUpUb3NqU0RJdk9TT2hXMnh2YkRSUDFSMENYVkVpMFhsMWFpNmFlZmdhZGtWa0ZMaEsvUTRseFZXMHRYWDAycTBsTFRhdWppY3FhYjduT1JOWEpyd1JFMFJlT3E4Tk45QlBueTNjelVPamNrL0hCR0dpMGpwZVBpWUR0T1pYNHV4M2lXMVYySGFTbm1ocHFOWXBGa3FHeHFqdDlWNUY1ZUNuYWNDNEp2OEFhZG5Pc3dWV3dRdHZNdHVyNmRrYlpVVm0vS3N1NG05eWZwdC91TlZCSHF5aks0YUlkMkZMeFg4Nm4yb0tWVzYvVmt4WkJaT1k1d2ZtZFFYMjkwTkxGUXd4VE5lNk9xWTlVVjBibXB3VGp5cWh6MjBua3pkY1kzK2t4SGhPbnAzVjBrZmNhK09TVnNhUDNVK2hKcXZLdW4wVis1Ry9lYitETFZsZTRkd3JqZHBKWWNzRDVWclFxTkQwTXYyYzdEalhDbUVaY040dXBJWTRxV1hmb0pZNmxzbjBIYXE1aW9uSm83aW43eXB6R29BRUdlWnp5T1JyQnYyTTFGQ29wVktBQU1KOUdJYmFIa25vK21JZmRURllFbjdhSGtubyttSWZkVEZZSFFzMk9ENnNvc3BlYUFBYkdWd0FBQUFBQUFBQUpQMkwvSlBXZE1UZTZoS3dKUDJORlNQTFM2VVQvbzFGUGVwbXl4cnl0WHVVWEtuK0MvNUthNW5Qd2ZWRmhrM3pUYndBYzlMNEFBQUFBQUFBQUFBQUFBQUFBQXhEYlE4azlIMHhEN3FZckFrL2JPVkhaWDI2bmJ4bGx2TUtSc1RsY3ZjcGVSQ3NEb1diSEI5V1VXVXZOQUFOaks0QUFBQUFBQUFBRXQ0OXd4aXZKck1xNzQ0d3ZaWjc3ZzIreWQydWREU3RWWmFPVlZWVmVpSnphdWNxTHlhT1ZxNmFOVXFRR0M1dG83bU54eUxGTXlSeVZSMWFWSkp6ZHB6TC9kVGZ0MkltdTA0dCtUUmNGODMvQUZEKytNNWw3NkJpTHFzWGFsWUFvOW1MUG4zSnVzcFNUL0djeTk5QXhGMVdMdFI0em1Ydm9HSXVxeGRxVmdCc3haOCs0MWxLU2Y0em1Ydm9HSXVxeGRxUEdjeTk5QXhGMVdMdFNzQU5tTFBuM0dzcFNUL0djeTk5QXhGMVdMdFI0em1Ydm9HSXVxeGRxVmdCc3haOCs0MWxLU2Y0em1Ydm9HSXVxeGRxUEdjeTk5QXhGMVdMdFNzQU5tTFBuM0dzcFNUL0FCbk12ZlFNUmRWaTdVZU01bDc2QmlMcXNYYWxZQWJNV2ZQdU5aU2tuK001bDc2QmlMcXNYYWp4bk12bDVMZmlKVjVrU2xpNC93Q3FWZ0JzeFo4KzQxbEtTcmdxeVluenZ6TXNtTEwxWWFxeDRIdy9MOG9vNGF0RmJKWFRJcUtpNmM2YXRicXZGcUlpdFJWVlZLcUFMdTJ0bzdhTlJ4ckJJaFN5VlNWYVZRQUJJTVlBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUIvOWs9IiwgInNpemVzIjogIjUxMng1MTIiLCAidHlwZSI6ICJpbWFnZS9wbmcifV19">
+<meta name="apple-mobile-web-app-title" content="복용기록">
+<meta name="theme-color" content="#FAFAF8">
+<title>복용 기록</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1C1C1A;
+  --ink2: #5F5E5A;
+  --ink3: #B4B2A9;
+  --ink4: #E8E6E0;
+  --paper: #FAFAF8;
+  --paper2: #F3F1EB;
+  --paper3: #ECEAE4;
+  --green: #3B6D11; --green-bg: #EAF3DE; --green-bd: #97C459;
+  --amber: #854F0B; --amber-bg: #FAEEDA; --amber-bd: #EF9F27;
+  --red: #A32D2D; --red-bg: #FCEBEB; --red-bd: #F09595;
+  --blue: #185FA5; --blue-bg: #E6F1FB; --blue-bd: #85B7EB;
+  --pink: #72243E; --pink-bg: #FBEAF0; --pink-bd: #ED93B1;
+  --brown: #5D4037; --brown-bg: #FFF8E1; --brown-bd: #BCAAA4;
+  --tab-h: 56px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: 'Pretendard', -apple-system, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 14px;
+  min-height: 100dvh;
+  overscroll-behavior: none;
+}
+
+/* ── 앱 레이아웃 ── */
+.app { display: flex; flex-direction: column; height: 100dvh; max-width: 430px; margin: 0 auto; background: var(--paper); }
+.app-body { flex: 1; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; padding-bottom: calc(var(--tab-h) + var(--safe-bottom) + 16px); }
+.section { display: none; }
+.section.active { display: block; }
+
+/* ── 탭바 ── */
+.tabbar {
+  display: flex; height: var(--tab-h);
+  border-top: 0.5px solid var(--ink4);
+  background: var(--paper);
+  padding-bottom: var(--safe-bottom);
+  flex-shrink: 0;
+}
+.tab-btn {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 3px; background: none; border: none; cursor: pointer;
+  font-family: 'Pretendard', sans-serif; color: var(--ink3); font-size: 10px; font-weight: 400;
+  transition: color .15s;
+}
+.tab-btn i { font-size: 20px; }
+.tab-btn.active { color: var(--ink); font-weight: 500; }
+
+/* ── 헤더 ── */
+.page-header { padding: 20px 20px 0; }
+.page-title { font-size: 22px; font-weight: 500; letter-spacing: -.3px; }
+.page-sub { font-size: 12px; color: var(--ink2); margin-top: 3px; }
+
+/* ── 날짜 스트립 ── */
+.date-strip-wrap { padding: 14px 20px 0; }
+.date-strip { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; scroll-snap-type: x mandatory; -ms-overflow-style: none; scrollbar-width: none; }
+.date-strip::-webkit-scrollbar { display: none; }
+.d-item {
+  flex-shrink: 0; width: 44px; text-align: center;
+  background: var(--paper); border: 0.5px solid var(--ink4);
+  border-radius: 12px; padding: 6px 4px; cursor: pointer;
+  scroll-snap-align: center; transition: all .15s;
+}
+.d-item:active { transform: scale(.96); }
+.d-item.on { background: var(--ink); border-color: var(--ink); }
+.d-item.on .d-dow, .d-item.on .d-day { color: var(--paper); }
+.d-dow { font-size: 10px; color: var(--ink3); }
+.d-day { font-size: 15px; font-weight: 500; color: var(--ink); margin-top: 1px; }
+.d-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--green); margin: 3px auto 0; }
+.d-dot.off { background: transparent; }
+.d-item.on .d-dot { background: rgba(255,255,255,.6); }
+
+/* ── 카드 리스트 ── */
+.card-section { padding: 12px 20px 0; }
+.section-label { font-size: 11px; font-weight: 500; color: var(--ink3); letter-spacing: .4px; text-transform: uppercase; margin-bottom: 6px; }
+.card-list { display: flex; flex-direction: column; gap: 6px; }
+
+.ecard {
+  background: var(--paper);
+  border: 0.5px solid var(--ink4);
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex; align-items: flex-start; gap: 10px;
+  cursor: pointer; transition: background .12s;
+  position: relative;
+}
+.ecard:active { background: var(--paper2); }
+.ecard.is-med { border-color: var(--green-bd); }
+
+.ec-time { font-size: 11px; color: var(--ink3); min-width: 30px; padding-top: 2px; flex-shrink: 0; line-height: 1; }
+.ec-bar { width: 2.5px; border-radius: 2px; flex-shrink: 0; align-self: stretch; min-height: 20px; }
+.bar-med { background: var(--green); }
+.bar-mood { background: var(--amber); }
+.bar-caf { background: var(--brown); }
+.bar-symptom { background: var(--red); }
+.bar-sleep { background: var(--blue); }
+.bar-cycle { background: var(--pink); }
+
+.ec-body { flex: 1; min-width: 0; }
+.ec-cat { font-size: 10px; color: var(--ink3); margin-bottom: 2px; }
+.ec-main { font-size: 13px; font-weight: 500; color: var(--ink); line-height: 1.3; }
+.ec-sub { font-size: 11px; color: var(--ink2); margin-top: 2px; }
+.ec-elapsed {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-size: 10px; font-weight: 500;
+  background: var(--amber-bg); color: var(--amber);
+  border-radius: 10px; padding: 2px 7px; margin-top: 4px;
+}
+.ec-ref { font-size: 10px; color: var(--ink3); margin-top: 2px; }
+.ec-delete { position: absolute; right: 10px; top: 10px; background: none; border: none; color: var(--ink3); font-size: 16px; cursor: pointer; padding: 2px; line-height: 1; display: none; }
+.ecard:hover .ec-delete, .ecard.show-del .ec-delete { display: block; }
+
+.empty-state { text-align: center; padding: 48px 20px; color: var(--ink3); }
+.empty-state i { font-size: 32px; display: block; margin-bottom: 8px; }
+.empty-state p { font-size: 13px; line-height: 1.6; }
+
+/* ── FAB ── */
+.fab-wrap { padding: 12px 20px 0; }
+.fab {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  width: 100%; background: var(--ink); color: var(--paper);
+  border: none; border-radius: 24px; padding: 13px;
+  font-family: 'Pretendard', sans-serif; font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: opacity .15s;
+}
+.fab:active { opacity: .8; }
+.fab i { font-size: 16px; }
+
+/* ── 달력 ── */
+.cal-wrap { padding: 16px 20px 0; }
+.cal-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.cal-nav button { background: none; border: none; color: var(--ink2); font-size: 20px; cursor: pointer; padding: 4px 8px; }
+.cal-nav-title { font-size: 16px; font-weight: 500; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.cal-dow { font-size: 10px; color: var(--ink3); text-align: center; padding: 4px 0; }
+.cal-day {
+  aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-size: 13px; border-radius: 8px; cursor: pointer; color: var(--ink);
+  transition: background .12s; position: relative;
+}
+.cal-day:active { background: var(--paper2); }
+.cal-day.empty { cursor: default; }
+.cal-day.today { background: var(--ink); color: var(--paper); border-radius: 50%; }
+.cal-day.selected:not(.today) { border: 1.5px solid var(--ink); border-radius: 50%; }
+.cal-day.has-entry::after { content: ''; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; background: var(--green); }
+.cal-day.today.has-entry::after { background: var(--paper); }
+.cal-day.menstrual { background: var(--pink-bg); }
+.cal-day.menstrual.today { background: var(--pink); color: var(--paper); }
+
+.cal-detail { margin-top: 16px; border-top: 0.5px solid var(--ink4); padding-top: 12px; }
+.cal-detail-label { font-size: 13px; font-weight: 500; margin-bottom: 8px; color: var(--ink); }
+.cal-detail-list { display: flex; flex-direction: column; gap: 5px; }
+
+/* ── 분석 ── */
+.stats-wrap { padding: 16px 20px 0; display: flex; flex-direction: column; gap: 12px; }
+.stat-card { background: var(--paper2); border-radius: 12px; padding: 14px 16px; }
+.stat-card-title { font-size: 12px; font-weight: 500; color: var(--ink2); margin-bottom: 8px; }
+.stat-num { font-size: 24px; font-weight: 500; color: var(--ink); }
+.stat-unit { font-size: 12px; color: var(--ink3); margin-left: 3px; }
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 5px; }
+.tag { font-size: 11px; padding: 3px 9px; border-radius: 20px; font-weight: 500; }
+.tag-med { background: var(--green-bg); color: var(--green); }
+.tag-mood { background: var(--amber-bg); color: var(--amber); }
+.tag-symptom { background: var(--red-bg); color: var(--red); }
+.tag-caf { background: var(--brown-bg); color: var(--brown); }
+.tag-cycle { background: var(--pink-bg); color: var(--pink); }
+.tag-sleep { background: var(--blue-bg); color: var(--blue); }
+.empty-tags { font-size: 12px; color: var(--ink3); }
+.chart-bar-wrap { display: flex; flex-direction: column; gap: 6px; }
+.chart-row { display: flex; align-items: center; gap: 8px; }
+.chart-row-label { font-size: 11px; color: var(--ink2); min-width: 28px; }
+.chart-bar-bg { flex: 1; height: 8px; background: var(--paper3); border-radius: 4px; overflow: hidden; }
+.chart-bar-fill { height: 100%; border-radius: 4px; background: var(--amber); transition: width .4s; }
+.chart-row-val { font-size: 11px; color: var(--ink3); min-width: 16px; text-align: right; }
+
+/* ── 설정 ── */
+.setting-section { padding: 16px 20px 0; }
+.setting-card { background: var(--paper2); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
+.setting-title { font-size: 13px; font-weight: 500; margin-bottom: 10px; }
+.med-row { display: flex; align-items: center; gap: 8px; padding: 5px 0; border-bottom: 0.5px solid var(--ink4); }
+.med-row:last-of-type { border-bottom: none; }
+.med-row span { flex: 1; font-size: 13px; }
+.med-row button { background: none; border: none; color: var(--ink3); font-size: 18px; cursor: pointer; line-height: 1; padding: 2px 4px; }
+.add-row { display: flex; gap: 8px; margin-top: 8px; }
+.add-row input { flex: 1; font-family: 'Pretendard', sans-serif; font-size: 13px; background: var(--paper); border: 0.5px solid var(--ink4); border-radius: 8px; padding: 8px 10px; color: var(--ink); outline: none; }
+.add-row input:focus { border-color: var(--ink2); }
+.small-btn { background: var(--ink); color: var(--paper); border: none; border-radius: 8px; padding: 8px 12px; font-family: 'Pretendard', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; white-space: nowrap; }
+.cycle-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.cycle-row label { font-size: 12px; color: var(--ink2); min-width: 70px; }
+.cycle-row input { font-family: 'Pretendard', sans-serif; font-size: 13px; background: var(--paper); border: 0.5px solid var(--ink4); border-radius: 8px; padding: 6px 10px; color: var(--ink); outline: none; flex: 1; }
+.backup-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  width: 100%; background: var(--paper); border: 0.5px solid var(--ink4);
+  border-radius: 10px; padding: 11px; font-family: 'Pretendard', sans-serif;
+  font-size: 13px; color: var(--ink2); cursor: pointer; margin-bottom: 6px; transition: border-color .15s;
+}
+.backup-btn:hover { border-color: var(--ink2); color: var(--ink); }
+.backup-btn i { font-size: 16px; }
+.setting-note { font-size: 11px; color: var(--ink3); line-height: 1.5; margin-top: 4px; }
+.danger-btn { background: none; border: none; font-family: 'Pretendard', sans-serif; font-size: 12px; color: var(--ink3); cursor: pointer; text-align: center; display: block; width: 100%; padding: 8px; }
+
+/* ── 모달 ── */
+.modal-bg {
+  display: none; position: fixed; inset: 0;
+  background: rgba(28,28,26,.5); z-index: 100;
+  align-items: flex-end; justify-content: center;
+}
+.modal-bg.open { display: flex; }
+.modal {
+  background: var(--paper); border-radius: 20px 20px 0 0;
+  padding: 0 0 calc(20px + var(--safe-bottom));
+  width: 100%; max-width: 430px;
+  max-height: 88dvh; overflow-y: auto;
+}
+.modal-handle { width: 36px; height: 4px; background: var(--ink4); border-radius: 2px; margin: 12px auto 0; }
+.modal-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px 0; }
+.modal-title { font-size: 18px; font-weight: 500; }
+.modal-close { background: none; border: none; color: var(--ink3); font-size: 22px; cursor: pointer; line-height: 1; padding: 2px; }
+.modal-body { padding: 16px 20px 0; }
+
+.field { margin-bottom: 14px; }
+.field-label { font-size: 11px; font-weight: 500; color: var(--ink3); letter-spacing: .3px; margin-bottom: 6px; display: block; }
+.cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.cat-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 8px 4px; border: 0.5px solid var(--ink4); border-radius: 10px;
+  background: var(--paper); cursor: pointer; font-family: 'Pretendard', sans-serif;
+  font-size: 11px; color: var(--ink2); transition: all .12s;
+}
+.cat-btn i { font-size: 18px; }
+.cat-btn.on { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+.time-input { font-family: 'Pretendard', sans-serif; font-size: 15px; font-weight: 500; background: var(--paper2); border: 0.5px solid var(--ink4); border-radius: 10px; padding: 10px 14px; color: var(--ink); outline: none; width: 120px; }
+.text-input { font-family: 'Pretendard', sans-serif; font-size: 14px; background: var(--paper2); border: 0.5px solid var(--ink4); border-radius: 10px; padding: 10px 14px; color: var(--ink); outline: none; width: 100%; }
+.text-input:focus { border-color: var(--ink2); }
+select.text-input { cursor: pointer; }
+textarea.text-input { height: 72px; resize: none; }
+.pill-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+.pill { padding: 5px 12px; border: 0.5px solid var(--ink4); border-radius: 20px; background: var(--paper); font-family: 'Pretendard', sans-serif; font-size: 12px; color: var(--ink2); cursor: pointer; transition: all .12s; }
+.pill.on { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+.scale-row { display: flex; gap: 6px; }
+.scale-btn { width: 36px; height: 36px; border-radius: 50%; border: 0.5px solid var(--ink4); background: var(--paper); font-family: 'Pretendard', sans-serif; font-size: 13px; font-weight: 500; color: var(--ink2); cursor: pointer; transition: all .12s; }
+.scale-btn.on { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+.cond { display: none; }
+.cond.show { display: block; }
+.time-row { display: flex; align-items: center; gap: 8px; }
+.time-row label { font-size: 12px; color: var(--ink2); min-width: 28px; }
+.save-btn {
+  width: 100%; background: var(--ink); color: var(--paper); border: none; border-radius: 24px;
+  padding: 14px; font-family: 'Pretendard', sans-serif; font-size: 15px; font-weight: 500;
+  cursor: pointer; margin-top: 8px; transition: opacity .15s;
+}
+.save-btn:active { opacity: .8; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="app-body">
+
+    <!-- 오늘 섹션 -->
+    <div class="section active" id="sec-home">
+      <div class="page-header">
+        <div class="page-title" id="hdr-date"></div>
+        <div class="page-sub" id="hdr-sub"></div>
+      </div>
+      <div class="date-strip-wrap">
+        <div class="date-strip" id="date-strip"></div>
+      </div>
+      <div class="card-section" style="margin-top:12px;">
+        <div class="card-list" id="card-list"></div>
+      </div>
+      <div class="fab-wrap">
+        <button class="fab" onclick="openModal()">
+          <i class="ti ti-plus" aria-hidden="true"></i> 기록 추가
+        </button>
+      </div>
+    </div>
+
+    <!-- 달력 섹션 -->
+    <div class="section" id="sec-cal">
+      <div class="cal-wrap">
+        <div class="cal-nav">
+          <button onclick="prevMonth()" aria-label="이전달"><i class="ti ti-chevron-left"></i></button>
+          <span class="cal-nav-title" id="cal-title"></span>
+          <button onclick="nextMonth()" aria-label="다음달"><i class="ti ti-chevron-right"></i></button>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <div class="cal-detail">
+          <div class="cal-detail-label" id="cal-detail-label">날짜를 선택하세요</div>
+          <div class="cal-detail-list" id="cal-detail-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 분석 섹션 -->
+    <div class="section" id="sec-stats">
+      <div class="page-header"><div class="page-title">최근 7일</div></div>
+      <div class="stats-wrap" id="stats-body"></div>
+    </div>
+
+    <!-- 설정 섹션 -->
+    <div class="section" id="sec-setting">
+      <div class="page-header"><div class="page-title">설정</div></div>
+      <div class="setting-section">
+        <div class="setting-card">
+          <div class="setting-title">내 약 목록</div>
+          <div id="med-list"></div>
+          <div class="add-row">
+            <input type="text" id="med-input" placeholder="약 이름 입력" onkeydown="if(event.key==='Enter')addMed()">
+            <button class="small-btn" onclick="addMed()">추가</button>
+          </div>
+        </div>
+        <div class="setting-card">
+          <div class="setting-title">생리주기</div>
+          <div class="cycle-row">
+            <label>마지막 시작</label>
+            <input type="date" id="cycle-start" class="text-input" style="font-size:13px;">
+          </div>
+          <div class="cycle-row">
+            <label>주기 길이</label>
+            <input type="number" id="cycle-len" class="text-input" value="28" min="18" max="45" style="width:70px;flex:none;">
+            <span style="font-size:12px;color:var(--ink2);">일</span>
+          </div>
+          <button class="small-btn" style="width:100%;margin-top:8px;" onclick="saveCycle()">저장</button>
+        </div>
+        <div class="setting-card">
+          <div class="setting-title">백업 · 복구</div>
+          <button class="backup-btn" onclick="exportData()">
+            <i class="ti ti-download" aria-hidden="true"></i> JSON으로 내보내기
+          </button>
+          <label class="backup-btn" style="cursor:pointer;">
+            <i class="ti ti-upload" aria-hidden="true"></i> JSON 불러오기
+            <input type="file" accept=".json" onchange="importData(this)" style="display:none;">
+          </label>
+          <p class="setting-note">내보낸 파일은 파일 앱이나 iCloud Drive에 보관하면 기기 간 이동 가능해요.</p>
+        </div>
+        <button class="danger-btn" onclick="clearAll()">모든 기록 초기화</button>
+      </div>
+    </div>
+
+  </div><!-- app-body end -->
+
+  <!-- 하단 탭바 -->
+  <nav class="tabbar">
+    <button class="tab-btn active" onclick="switchTab('home',this)">
+      <i class="ti ti-home" aria-hidden="true"></i>
+      <span>홈</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('cal',this)">
+      <i class="ti ti-calendar" aria-hidden="true"></i>
+      <span>달력</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('stats',this)">
+      <i class="ti ti-chart-bar" aria-hidden="true"></i>
+      <span>분석</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('setting',this)">
+      <i class="ti ti-settings" aria-hidden="true"></i>
+      <span>설정</span>
+    </button>
+  </nav>
+</div>
+
+<!-- 기록 모달 -->
+<div class="modal-bg" id="modal-bg" onclick="bgClose(event)">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-text">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title-text">기록 추가</span>
+      <button class="modal-close" onclick="closeModal()" aria-label="닫기">&times;</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="field">
+        <span class="field-label">카테고리</span>
+        <div class="cat-grid">
+          <button class="cat-btn on" data-cat="med" onclick="setCat(this)">
+            <i class="ti ti-pill" aria-hidden="true"></i>약 복용
+          </button>
+          <button class="cat-btn" data-cat="symptom" onclick="setCat(this)">
+            <i class="ti ti-bandage" aria-hidden="true"></i>신체 증상
+          </button>
+          <button class="cat-btn" data-cat="mood" onclick="setCat(this)">
+            <i class="ti ti-mood-smile" aria-hidden="true"></i>감정
+          </button>
+          <button class="cat-btn" data-cat="caffeine" onclick="setCat(this)">
+            <i class="ti ti-coffee" aria-hidden="true"></i>카페인
+          </button>
+          <button class="cat-btn" data-cat="sleep" onclick="setCat(this)">
+            <i class="ti ti-moon" aria-hidden="true"></i>수면
+          </button>
+          <button class="cat-btn" data-cat="cycle" onclick="setCat(this)">
+            <i class="ti ti-heart" aria-hidden="true"></i>생리
+          </button>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">시각</span>
+        <input type="time" class="time-input" id="f-time">
+      </div>
+
+      <!-- 약 -->
+      <div class="cond show" id="c-med">
+        <div class="field">
+          <span class="field-label">약 이름</span>
+          <select class="text-input" id="f-med-name"></select>
+        </div>
+        <div class="field">
+          <span class="field-label">용량 메모</span>
+          <input type="text" class="text-input" id="f-med-dose" placeholder="예: 10mg, 아침 1정">
+        </div>
+      </div>
+
+      <!-- 증상 -->
+      <div class="cond" id="c-symptom">
+        <div class="field">
+          <span class="field-label">증상</span>
+          <div class="pill-grid" id="p-symptom">
+            <button class="pill" onclick="tpill(this)">두통</button>
+            <button class="pill" onclick="tpill(this)">건조함</button>
+            <button class="pill" onclick="tpill(this)">구역</button>
+            <button class="pill" onclick="tpill(this)">피로</button>
+            <button class="pill" onclick="tpill(this)">근육통</button>
+            <button class="pill" onclick="tpill(this)">눈 건조</button>
+            <button class="pill" onclick="tpill(this)">복통</button>
+            <button class="pill" onclick="tpill(this)">두근거림</button>
+            <button class="pill" onclick="tpill(this)">수면불량</button>
+          </div>
+        </div>
+        <div class="field">
+          <span class="field-label">강도</span>
+          <div class="scale-row" id="s-intensity">
+            <button class="scale-btn" onclick="tscale(this,'s-intensity')">1</button>
+            <button class="scale-btn" onclick="tscale(this,'s-intensity')">2</button>
+            <button class="scale-btn" onclick="tscale(this,'s-intensity')">3</button>
+            <button class="scale-btn" onclick="tscale(this,'s-intensity')">4</button>
+            <button class="scale-btn" onclick="tscale(this,'s-intensity')">5</button>
+          </div>
+        </div>
+        <div class="field">
+          <span class="field-label">메모</span>
+          <textarea class="text-input" id="f-symptom-note" placeholder="어떤 느낌인지..."></textarea>
+        </div>
+      </div>
+
+      <!-- 감정 -->
+      <div class="cond" id="c-mood">
+        <div class="field">
+          <span class="field-label">감정</span>
+          <div class="pill-grid" id="p-mood">
+            <button class="pill" onclick="tpill(this)">예민함</button>
+            <button class="pill" onclick="tpill(this)">짜증</button>
+            <button class="pill" onclick="tpill(this)">무기력</button>
+            <button class="pill" onclick="tpill(this)">불안</button>
+            <button class="pill" onclick="tpill(this)">우울</button>
+            <button class="pill" onclick="tpill(this)">감정기복</button>
+            <button class="pill" onclick="tpill(this)">평온</button>
+            <button class="pill" onclick="tpill(this)">활기</button>
+            <button class="pill" onclick="tpill(this)">슬픔</button>
+            <button class="pill" onclick="tpill(this)">상처받음</button>
+            <button class="pill" onclick="tpill(this)">감정 둔화</button>
+          </div>
+        </div>
+        <div class="field">
+          <span class="field-label">강도</span>
+          <div class="scale-row" id="s-mood">
+            <button class="scale-btn" onclick="tscale(this,'s-mood')">1</button>
+            <button class="scale-btn" onclick="tscale(this,'s-mood')">2</button>
+            <button class="scale-btn" onclick="tscale(this,'s-mood')">3</button>
+            <button class="scale-btn" onclick="tscale(this,'s-mood')">4</button>
+            <button class="scale-btn" onclick="tscale(this,'s-mood')">5</button>
+          </div>
+        </div>
+        <div class="field">
+          <span class="field-label">메모</span>
+          <textarea class="text-input" id="f-mood-note" placeholder="지금 어떤 기분인지..."></textarea>
+        </div>
+      </div>
+
+      <!-- 카페인 -->
+      <div class="cond" id="c-caffeine">
+        <div class="field">
+          <span class="field-label">종류</span>
+          <div class="pill-grid" id="p-caf">
+            <button class="pill" onclick="tpill(this)">아메리카노</button>
+            <button class="pill" onclick="tpill(this)">라떼</button>
+            <button class="pill" onclick="tpill(this)">녹차</button>
+            <button class="pill" onclick="tpill(this)">홍차</button>
+            <button class="pill" onclick="tpill(this)">에너지드링크</button>
+            <button class="pill" onclick="tpill(this)">기타</button>
+          </div>
+        </div>
+        <div class="field">
+          <span class="field-label">메모</span>
+          <input type="text" class="text-input" id="f-caf-note" placeholder="예: 따뜻한 한 잔">
+        </div>
+      </div>
+
+      <!-- 수면 -->
+      <div class="cond" id="c-sleep">
+        <div class="field">
+          <span class="field-label">취침</span>
+          <input type="time" class="time-input" id="f-sleep-start" value="23:00">
+        </div>
+        <div class="field">
+          <span class="field-label">기상</span>
+          <input type="time" class="time-input" id="f-sleep-end" value="07:00">
+        </div>
+        <div class="field">
+          <span class="field-label">수면 질</span>
+          <div class="scale-row" id="s-sleep">
+            <button class="scale-btn" onclick="tscale(this,'s-sleep')">1</button>
+            <button class="scale-btn" onclick="tscale(this,'s-sleep')">2</button>
+            <button class="scale-btn" onclick="tscale(this,'s-sleep')">3</button>
+            <button class="scale-btn" onclick="tscale(this,'s-sleep')">4</button>
+            <button class="scale-btn" onclick="tscale(this,'s-sleep')">5</button>
+          </div>
+        </div>
+        <div class="field">
+          <span class="field-label">메모</span>
+          <input type="text" class="text-input" id="f-sleep-note" placeholder="">
+        </div>
+      </div>
+
+      <!-- 생리 -->
+      <div class="cond" id="c-cycle">
+        <div class="field">
+          <span class="field-label">상태</span>
+          <div class="pill-grid" id="p-cycle-state">
+            <button class="pill" onclick="tpill(this)">시작</button>
+            <button class="pill" onclick="tpill(this)">진행중</button>
+            <button class="pill" onclick="tpill(this)">종료</button>
+            <button class="pill" onclick="tpill(this)">PMS</button>
+            <button class="pill" onclick="tpill(this)">배란통</button>
+          </div>
+        </div>
+        <div class="field">
+          <span class="field-label">동반 증상</span>
+          <div class="pill-grid" id="p-cycle-sym">
+            <button class="pill" onclick="tpill(this)">복통</button>
+            <button class="pill" onclick="tpill(this)">허리통증</button>
+            <button class="pill" onclick="tpill(this)">두통</button>
+            <button class="pill" onclick="tpill(this)">부종</button>
+            <button class="pill" onclick="tpill(this)">예민</button>
+          </div>
+        </div>
+        <div class="field">
+          <span class="field-label">메모</span>
+          <textarea class="text-input" id="f-cycle-note" placeholder=""></textarea>
+        </div>
+      </div>
+
+      <button class="save-btn" onclick="saveEntry()">저장</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── 상태 ── */
+let S = load();
+let currentCat = 'med';
+let selectedDate = today();
+let editDate = today();
+let calY, calM;
+
+function load() {
+  try { return JSON.parse(localStorage.getItem('rx_tracker_v2')) || def(); } catch(e) { return def(); }
+}
+function def() { return { entries:{}, meds:['알리톡 10mg','트레노 100mg'], cycleStart:'', cycleLen:28 }; }
+function save() { localStorage.setItem('rx_tracker_v2', JSON.stringify(S)); }
+function today() { const d=new Date(); return fmt(d); }
+function fmt(d) { return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()); }
+function p(n) { return n<10?'0'+n:''+n; }
+function nowT() { const d=new Date(); return p(d.getHours())+':'+p(d.getMinutes()); }
+function toMin(t) { const[h,m]=t.split(':').map(Number); return h*60+m; }
+function fmtElapsed(min) {
+  if(min<0) return null;
+  const h=Math.floor(min/60), m=min%60;
+  if(h===0) return `+${m}분`;
+  if(m===0) return `+${h}시간`;
+  return `+${h}시간 ${m}분`;
+}
+function lastMed(entries, idx) {
+  for(let i=idx-1;i>=0;i--) if(entries[i].cat==='med') return entries[i];
+  return null;
+}
+
+/* ── 탭 ── */
+function switchTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='home') renderHome();
+  if(id==='cal') { initCal(); renderCal(); renderCalDetail(selectedDate); }
+  if(id==='stats') renderStats();
+  if(id==='setting') renderSetting();
+}
+
+/* ── 홈 ── */
+function renderHome() {
+  const d = new Date();
+  const days=['일','월','화','수','목','금','토'];
+  const months=['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+  document.getElementById('hdr-date').textContent = months[d.getMonth()]+' '+d.getDate()+'일 '+days[d.getDay()];
+  const cd = getCycleDay(today());
+  let sub = d.getFullYear()+'년';
+  if(cd) sub += ' · 생리주기 '+cd+'일째';
+  document.getElementById('hdr-sub').textContent = sub;
+  renderStrip();
+  renderCards(selectedDate);
+}
+
+function renderStrip() {
+  const strip = document.getElementById('date-strip');
+  strip.innerHTML = '';
+  const days=['일','월','화','수','목','금','토'];
+  const t = today();
+  for(let i=-6; i<=0; i++) {
+    const d=new Date(); d.setDate(d.getDate()+i);
+    const ds=fmt(d);
+    const el=document.createElement('div');
+    el.className='d-item'+(ds===selectedDate?' on':'');
+    const hasDot = S.entries[ds] && S.entries[ds].length>0;
+    el.innerHTML=`<div class="d-dow">${days[d.getDay()]}</div><div class="d-day">${d.getDate()}</div><div class="d-dot${hasDot?'':' off'}"></div>`;
+    el.onclick=()=>{ selectedDate=ds; editDate=ds; renderStrip(); renderCards(ds); updateHeader(ds); };
+    strip.appendChild(el);
+  }
+  const last=strip.lastChild;
+  if(last) last.scrollIntoView({inline:'end',block:'nearest'});
+}
+
+function updateHeader(ds) {
+  const d=new Date(ds+'T00:00:00');
+  const days=['일','월','화','수','목','금','토'];
+  const months=['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+  const isToday = ds===today();
+  document.getElementById('hdr-date').textContent = months[d.getMonth()]+' '+d.getDate()+'일 '+days[d.getDay()]+(isToday?' (오늘)':'');
+}
+
+function renderCards(ds) {
+  const list = document.getElementById('card-list');
+  list.innerHTML='';
+  const entries = S.entries[ds]||[];
+  if(entries.length===0){
+    list.innerHTML=`<div class="empty-state"><i class="ti ti-notes" aria-hidden="true"></i><p>기록이 없어요.<br>아래 버튼으로 추가해보세요.</p></div>`;
+    return;
+  }
+  const catNames={med:'약 복용',symptom:'신체 증상',mood:'감정',caffeine:'카페인',sleep:'수면',cycle:'생리주기'};
+  entries.forEach((e,i)=>{
+    const card=document.createElement('div');
+    card.className='ecard'+(e.cat==='med'?' is-med':'');
+    const ref=lastMed(entries,i);
+    let elapsedHtml='';
+    if(e.cat!=='med' && ref){
+      const diff=toMin(e.time)-toMin(ref.time);
+      const badge=fmtElapsed(diff);
+      if(badge) elapsedHtml=`<div class="ec-elapsed"><i class="ti ti-clock" style="font-size:11px" aria-hidden="true"></i>${badge} 후</div><div class="ec-ref">${ref.medName||ref.med||'복용'} 기준</div>`;
+    }
+    card.innerHTML=`
+      <div class="ec-time">${e.time}</div>
+      <div class="ec-bar bar-${e.cat}"></div>
+      <div class="ec-body">
+        <div class="ec-cat">${catNames[e.cat]||e.cat}</div>
+        <div class="ec-main">${mainLabel(e)}</div>
+        ${e.sub||e.note||e.dose?`<div class="ec-sub">${e.sub||e.dose||e.note||''}</div>`:''}
+        ${elapsedHtml}
+      </div>
+      <button class="ec-delete" onclick="delEntry('${ds}',${i},event)" aria-label="삭제">×</button>`;
+    card.onclick=()=>card.classList.toggle('show-del');
+    list.appendChild(card);
+  });
+}
+
+function mainLabel(e) {
+  if(e.cat==='med') return e.medName||(e.tags&&e.tags[0])||'약';
+  if(e.cat==='sleep') return e.sleepStart&&e.sleepEnd?e.sleepStart+' – '+e.sleepEnd:'수면';
+  const tags=(e.tags||[]).concat(e.stateTags||[]).concat(e.symTags||[]);
+  return tags.length>0 ? tags.slice(0,3).join(' · ') : (e.note||e.cat);
+}
+
+function delEntry(ds,idx,ev) {
+  ev.stopPropagation();
+  if(!confirm('이 기록을 삭제할까요?')) return;
+  S.entries[ds].splice(idx,1);
+  if(!S.entries[ds].length) delete S.entries[ds];
+  save(); renderCards(ds); renderStrip();
+}
+
+/* ── 모달 ── */
+function openModal(ds) {
+  editDate = ds || selectedDate;
+  document.getElementById('f-time').value = nowT();
+  document.getElementById('modal-bg').classList.add('open');
+  setCatById('med'); clearForm(); updateMedSelect();
+}
+function closeModal() { document.getElementById('modal-bg').classList.remove('open'); }
+function bgClose(e) { if(e.target===document.getElementById('modal-bg')) closeModal(); }
+
+function setCat(btn) {
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  currentCat=btn.dataset.cat;
+  showFields(currentCat);
+}
+function setCatById(cat) {
+  document.querySelectorAll('.cat-btn').forEach(b=>{ b.classList.remove('on'); if(b.dataset.cat===cat) b.classList.add('on'); });
+  currentCat=cat; showFields(cat);
+}
+function showFields(cat) {
+  ['med','symptom','mood','caffeine','sleep','cycle'].forEach(c=>{
+    document.getElementById('c-'+c).className='cond'+(c===cat?' show':'');
+  });
+}
+function tpill(btn) { btn.classList.toggle('on'); }
+function tscale(btn,gid) { document.querySelectorAll('#'+gid+' .scale-btn').forEach(b=>b.classList.remove('on')); btn.classList.add('on'); }
+function gscale(gid) { const s=document.querySelector('#'+gid+' .scale-btn.on'); return s?parseInt(s.textContent):null; }
+function gpills(pid) { return [...document.querySelectorAll('#'+pid+' .pill.on')].map(b=>b.textContent); }
+function clearForm() {
+  document.querySelectorAll('.pill.on').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.scale-btn.on').forEach(b=>b.classList.remove('on'));
+  ['f-med-dose','f-symptom-note','f-mood-note','f-caf-note','f-sleep-note','f-cycle-note'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
+  });
+  document.getElementById('f-sleep-start').value='23:00';
+  document.getElementById('f-sleep-end').value='07:00';
+}
+function updateMedSelect() {
+  const sel=document.getElementById('f-med-name'); sel.innerHTML='';
+  (S.meds||[]).forEach(m=>{ const o=document.createElement('option'); o.value=m; o.textContent=m; sel.appendChild(o); });
+  if(!S.meds||!S.meds.length){ const o=document.createElement('option'); o.value='기타'; o.textContent='설정에서 약 추가'; sel.appendChild(o); }
+}
+
+function saveEntry() {
+  const time=document.getElementById('f-time').value||nowT();
+  let e={cat:currentCat, time};
+  if(currentCat==='med'){
+    e.medName=document.getElementById('f-med-name').value;
+    e.dose=document.getElementById('f-med-dose').value;
+  } else if(currentCat==='symptom'){
+    e.tags=gpills('p-symptom'); e.intensity=gscale('s-intensity'); e.note=document.getElementById('f-symptom-note').value;
+    e.sub=e.tags.join(' · ')+(e.intensity?' (강도 '+e.intensity+')':'');
+  } else if(currentCat==='mood'){
+    e.tags=gpills('p-mood'); e.scale=gscale('s-mood'); e.note=document.getElementById('f-mood-note').value;
+    e.sub=e.tags.join(' · ')+(e.scale?' (강도 '+e.scale+')':'');
+  } else if(currentCat==='caffeine'){
+    e.tags=gpills('p-caf'); e.note=document.getElementById('f-caf-note').value;
+  } else if(currentCat==='sleep'){
+    e.sleepStart=document.getElementById('f-sleep-start').value;
+    e.sleepEnd=document.getElementById('f-sleep-end').value;
+    e.quality=gscale('s-sleep'); e.note=document.getElementById('f-sleep-note').value;
+  } else if(currentCat==='cycle'){
+    e.stateTags=gpills('p-cycle-state'); e.symTags=gpills('p-cycle-sym'); e.note=document.getElementById('f-cycle-note').value;
+    e.tags=[...e.stateTags,...e.symTags];
+  }
+  if(!S.entries[editDate]) S.entries[editDate]=[];
+  S.entries[editDate].push(e);
+  S.entries[editDate].sort((a,b)=>a.time.localeCompare(b.time));
+  save(); closeModal();
+  if(document.getElementById('sec-home').classList.contains('active')){ renderStrip(); renderCards(editDate); }
+  if(document.getElementById('sec-cal').classList.contains('active')){ renderCal(); renderCalDetail(editDate); }
+}
+
+/* ── 달력 ── */
+function initCal() { if(!calY){ const d=new Date(); calY=d.getFullYear(); calM=d.getMonth(); } }
+function prevMonth() { calM--; if(calM<0){calM=11;calY--;} renderCal(); }
+function nextMonth() { calM++; if(calM>11){calM=0;calY++;} renderCal(); }
+
+function renderCal() {
+  document.getElementById('cal-title').textContent = calY+'년 '+(calM+1)+'월';
+  const grid=document.getElementById('cal-grid');
+  grid.innerHTML='';
+  ['일','월','화','수','목','금','토'].forEach(d=>{ const el=document.createElement('div'); el.className='cal-dow'; el.textContent=d; grid.appendChild(el); });
+  const first=new Date(calY,calM,1).getDay();
+  const daysIn=new Date(calY,calM+1,0).getDate();
+  const t=today();
+  for(let i=0;i<first;i++){ const el=document.createElement('div'); el.className='cal-day empty'; grid.appendChild(el); }
+  for(let d=1;d<=daysIn;d++){
+    const ds=calY+'-'+p(calM+1)+'-'+p(d);
+    const el=document.createElement('div');
+    let cls='cal-day';
+    if(ds===t) cls+=' today';
+    if(ds===selectedDate&&ds!==t) cls+=' selected';
+    if(S.entries[ds]&&S.entries[ds].length) cls+=' has-entry';
+    if(isMenstrual(ds)) cls+=' menstrual';
+    el.className=cls; el.textContent=d;
+    el.onclick=()=>{ selectedDate=ds; editDate=ds; renderCal(); renderCalDetail(ds); };
+    grid.appendChild(el);
+  }
+}
+
+function renderCalDetail(ds) {
+  const parts=ds.split('-');
+  document.getElementById('cal-detail-label').textContent=parseInt(parts[1])+'월 '+parseInt(parts[2])+'일';
+  const list=document.getElementById('cal-detail-list');
+  list.innerHTML='';
+  const entries=S.entries[ds]||[];
+  if(!entries.length){ list.innerHTML='<div style="font-size:12px;color:var(--ink3);padding:8px 0;">기록 없음</div>'; return; }
+  const catNames={med:'약',symptom:'증상',mood:'감정',caffeine:'카페인',sleep:'수면',cycle:'생리'};
+  entries.forEach((e,i)=>{
+    const ref=lastMed(entries,i);
+    let elHtml='';
+    if(e.cat!=='med'&&ref){ const diff=toMin(e.time)-toMin(ref.time); const b=fmtElapsed(diff); if(b) elHtml=` <span style="font-size:10px;font-weight:500;background:var(--amber-bg);color:var(--amber);border-radius:8px;padding:1px 6px;margin-left:4px;">${b}</span>`; }
+    const row=document.createElement('div');
+    row.style.cssText='display:flex;align-items:flex-start;gap:8px;padding:5px 0;border-bottom:0.5px solid var(--ink4);';
+    row.innerHTML=`<span style="font-size:10px;color:var(--ink3);min-width:30px;padding-top:1px;">${e.time}</span><div style="width:2px;border-radius:2px;background:var(--${e.cat==='med'?'green':e.cat==='mood'?'amber':e.cat==='caffeine'?'brown':e.cat==='symptom'?'red':e.cat==='sleep'?'blue':'pink'});align-self:stretch;flex-shrink:0;min-height:16px;"></div><div style="flex:1;"><div style="font-size:10px;color:var(--ink3);">${catNames[e.cat]||''}</div><div style="font-size:12px;font-weight:500;">${mainLabel(e)}${elHtml}</div></div>`;
+    list.appendChild(row);
+  });
+  const addBtn=document.createElement('button');
+  addBtn.className='fab'; addBtn.style.cssText='margin-top:10px;padding:10px;font-size:13px;';
+  addBtn.innerHTML='<i class="ti ti-plus" aria-hidden="true"></i> 이 날에 기록 추가';
+  addBtn.onclick=()=>openModal(ds);
+  list.appendChild(addBtn);
+}
+
+function isMenstrual(ds) {
+  if(!S.cycleStart) return false;
+  const start=new Date(S.cycleStart+'T00:00:00');
+  const d=new Date(ds+'T00:00:00');
+  const diff=Math.round((d-start)/(1000*60*60*24));
+  const pos=((diff%S.cycleLen)+S.cycleLen)%S.cycleLen;
+  return pos<6;
+}
+function getCycleDay(ds) {
+  if(!S.cycleStart) return null;
+  const start=new Date(S.cycleStart+'T00:00:00');
+  const d=new Date(ds+'T00:00:00');
+  const diff=Math.round((d-start)/(1000*60*60*24));
+  const pos=((diff%S.cycleLen)+S.cycleLen)%S.cycleLen;
+  return pos+1;
+}
+
+/* ── 분석 ── */
+function renderStats() {
+  const body=document.getElementById('stats-body');
+  body.innerHTML='';
+  const days=[];
+  for(let i=6;i>=0;i--){ const d=new Date(); d.setDate(d.getDate()-i); days.push(fmt(d)); }
+  let medCnt=0, moodTags=[], symTags=[], cafCnt=0, sleepQuals=[];
+  days.forEach(ds=>{
+    (S.entries[ds]||[]).forEach(e=>{
+      if(e.cat==='med') medCnt++;
+      if(e.cat==='mood') moodTags.push(...(e.tags||[]));
+      if(e.cat==='symptom') symTags.push(...(e.tags||[]));
+      if(e.cat==='caffeine') cafCnt++;
+      if(e.cat==='sleep'&&e.quality) sleepQuals.push(e.quality);
+    });
+  });
+  const avgSleep=sleepQuals.length?Math.round(sleepQuals.reduce((a,b)=>a+b,0)/sleepQuals.length*10)/10:null;
+  const moodFreq=freq(moodTags), symFreq=freq(symTags);
+  const dayLabels=['7일전','6일전','5일전','4일전','3일전','2일전','오늘'];
+  const moodCounts=days.map(ds=>(S.entries[ds]||[]).filter(e=>e.cat==='mood').length);
+  const maxM=Math.max(...moodCounts,1);
+
+  body.innerHTML=`
+    <div class="stat-card">
+      <div class="stat-card-title">💊 7일 복용 횟수</div>
+      <div><span class="stat-num">${medCnt}</span><span class="stat-unit">회</span></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-title">💭 자주 나타난 감정</div>
+      ${moodFreq.length?`<div class="tag-cloud">${moodFreq.slice(0,8).map(([k,v])=>`<span class="tag tag-mood">${k} <span style="opacity:.6">${v}</span></span>`).join('')}</div>`:'<div class="empty-tags">기록 없음</div>'}
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-title">🩹 자주 나타난 증상</div>
+      ${symFreq.length?`<div class="tag-cloud">${symFreq.slice(0,8).map(([k,v])=>`<span class="tag tag-symptom">${k} <span style="opacity:.6">${v}</span></span>`).join('')}</div>`:'<div class="empty-tags">기록 없음</div>'}
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-title">☕ 카페인 섭취</div>
+      <div><span class="stat-num">${cafCnt}</span><span class="stat-unit">회 / 7일</span></div>
+    </div>
+    ${avgSleep!==null?`<div class="stat-card"><div class="stat-card-title">🌙 평균 수면 질</div><div><span class="stat-num">${avgSleep}</span><span class="stat-unit">/ 5</span></div></div>`:''}
+    <div class="stat-card">
+      <div class="stat-card-title">💭 감정 기록 빈도 (일별)</div>
+      <div class="chart-bar-wrap">${days.map((ds,i)=>`<div class="chart-row"><span class="chart-row-label">${dayLabels[i]}</span><div class="chart-bar-bg"><div class="chart-bar-fill" style="width:${Math.round(moodCounts[i]/maxM*100)}%"></div></div><span class="chart-row-val">${moodCounts[i]}</span></div>`).join('')}</div>
+    </div>`;
+}
+
+function freq(arr){const m={}; arr.forEach(k=>{m[k]=(m[k]||0)+1;}); return Object.entries(m).sort((a,b)=>b[1]-a[1]);}
+
+/* ── 설정 ── */
+function renderSetting() {
+  const list=document.getElementById('med-list'); list.innerHTML='';
+  (S.meds||[]).forEach((m,i)=>{
+    const row=document.createElement('div'); row.className='med-row';
+    row.innerHTML=`<i class="ti ti-pill" style="font-size:14px;color:var(--green)" aria-hidden="true"></i><span>${m}</span><button onclick="delMed(${i})" aria-label="삭제">×</button>`;
+    list.appendChild(row);
+  });
+  if(S.cycleStart) document.getElementById('cycle-start').value=S.cycleStart;
+  document.getElementById('cycle-len').value=S.cycleLen||28;
+}
+function addMed(){ const v=document.getElementById('med-input').value.trim(); if(!v)return; S.meds.push(v); document.getElementById('med-input').value=''; save(); renderSetting(); }
+function delMed(i){ S.meds.splice(i,1); save(); renderSetting(); }
+function saveCycle(){
+  S.cycleStart=document.getElementById('cycle-start').value;
+  S.cycleLen=parseInt(document.getElementById('cycle-len').value)||28;
+  save(); alert('저장됐어요!');
+  if(document.getElementById('sec-cal').classList.contains('active')) renderCal();
+}
+
+/* ── 백업 ── */
+function exportData(){
+  const blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='복용기록_'+today()+'.json'; a.click(); URL.revokeObjectURL(url);
+}
+function importData(input){
+  const file=input.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{ try{ const data=JSON.parse(e.target.result); if(data.entries){ S=data; save(); alert('복구됐어요!'); renderHome(); }else{alert('올바른 파일이 아니에요.');} }catch(err){alert('파일을 읽을 수 없어요.');} };
+  reader.readAsText(file);
+}
+function clearAll(){
+  if(confirm('모든 기록을 삭제할까요? 되돌릴 수 없어요.')){ const m=S.meds; S=def(); S.meds=m; save(); renderHome(); alert('초기화됐어요.'); }
+}
+
+/* ── 초기화 ── */
+renderHome();
+const _d=new Date(); calY=_d.getFullYear(); calM=_d.getMonth();
+</script>
+</body>
+</html>
